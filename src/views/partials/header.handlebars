@@ -1,0 +1,55 @@
+<!-- header -->
+<div class="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div id="logo_title">
+            <img id="logo_header" src="/img/logo.png" alt="logo">
+            <a class="navbar-brand" href="/" id="brand_nav">Hotel Booking</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav mr-auto" id="list_route">
+            <li class="nav-item">
+                <a class="nav-link" id="home-route" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="some-img" style="cursor: pointer;" onclick="scrollToSomeImages()">Some Images</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="about-route" style="cursor: pointer;" onclick="scrollToAboutUs()">About us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="history-route" href="/service/history-booking">History</a>
+            </li>
+        </ul>
+        </div>
+        <div id="item_nav_end">
+            {{#unless mailUser}}
+            <div>
+                <a id="btn_sign_in" href="/user/login">Sign in</a>
+            </div>
+            {{/unless}}
+            {{#if mailUser}}
+            <div class="dropdown">
+                <a class="dropdown-toggle text-primary" aria-haspopup="true" data-toggle="dropdown"
+                    id="dropdownMenu1"><i class="fa-regular fa-user"></i></a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    {{#if nameUser}}
+                    <div class="text-center font-weight-bold">{{welcome nameUser}}</div>
+                    {{/if}}
+                    {{#if mailUser}}
+                    <div class="text-center">{{mailUser}}</div>
+                    {{/if}}
+                    <a class="dropdown-item" href="/user/edit-profile"><i class="fas fa-info-circle"></i>&nbsp;&nbsp; Update information</a>
+                    <a class="dropdown-item" href="/user/change-password"><i class="fa-solid fa-lock"></i>&nbsp;&nbsp; Change password</a>
+                    <a class="dropdown-item" href="/user/logout"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Log out</a>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </nav>
+</div>
+<!-- end header -->

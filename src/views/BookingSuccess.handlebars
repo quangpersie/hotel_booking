@@ -1,0 +1,61 @@
+{{> header}}
+<div style="margin-top: 59px; padding: 0px 32px">
+  <div id="booking_success">
+    <div id="book_success_col_left">
+      <div class="header-form-infomation">
+        <i class="fa-regular fa-circle-check icon-header"></i>
+        <h2 style="color: #2D9332;">Booking Successfully</h2>
+      </div>
+
+      <div class="container_bg">
+        <h3>Details</h3>
+        <div class="info_date_book">
+          <div class="info_room_book">
+            <b class="title_info_book">Date:</b>
+            <div>{{flash_from}}</div>
+          </div>
+
+          <div class="info_room_book">
+            <b class="title_info_book pl-1">To:</b>
+            <div>{{flash_to}}</div>
+          </div>
+        </div>
+
+        <div class="info_room_book">
+          <b class="title_info_book_type">Type room:</b>
+          <div>{{roomType}}</div>
+        </div>
+
+        <div class="container_inner">
+          <div class="inner_before">
+            <div class="title_inner">
+              <div class="inner_title">Booking Code: </div><span>{{curBooking.bookingCode}}</span>
+            </div>
+            <div class="title_inner">
+              <div class="inner_title">Total: </div><span>${{curBooking.price}}</span>
+
+            </div>
+            <div class="title_inner" style="display: block !important;">
+              <div class="inner_title">Services: </div>
+              {{#each curBooking.services}}
+              <span>{{getInfoService this}}</span><br>
+              {{/each}}
+              {{#if (emptyObj curBooking.services)}}
+              <span>None</span><br>
+              {{/if}}
+            </div>
+          </div>
+          <div class="inner_after">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container_btn">
+      <a class="btn mx-2 btn_homepage" href="/">Go to homepage <i class="ti-home"></i></a>
+      <a class="btn mx-2 btn_homepage" href="/service/history-booking">Confirm <i class="fa fa-history"
+          aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div>

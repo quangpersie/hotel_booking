@@ -1,0 +1,90 @@
+{{> header}}
+<style>
+    #pwd {
+        padding-right: 32px;
+    }
+
+    .bg_icon {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 10px;
+        top: 12px;
+        z-index: 100;
+    }
+
+    .mic {
+        font-size: 18px;
+    }
+</style>
+<!-- token err modal -->
+{{#if tokenErrorMsg}}
+<div class="modal" id="modalToken">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Notification</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="errName" class="mt-2 text-center">{{tokenErrorMsg}}</p>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
+<div class="content-signin">
+    <div class="container-signin">
+        <p id="title-signin">SIGN IN</p>
+        <form novalidate class="fill-place-signin" method="post" action="">
+            <div>
+                <label class="text-title-form" for="email">Email Address</label>
+                <input class="site-ui-input" type="email" placeholder="Your email" name="email" value="{{email}}">
+            </div>
+            <div>
+                <label class="text-title-form" for="password">Password</label><br>
+                <div style="position: relative;padding-top: 0;">
+                    <input id="pwd" class="site-ui-input" type="password" placeholder="Your password" name="password"
+                        value="{{password}}">
+                    <div class="bg_icon" style="padding-top: 0;"><i class="far fa-eye mic"></i></div>
+                </div>
+            </div>
+            <div id="forgotpwd">
+                <a style="color: black;" href="/user/forgot-password">Forgot password ?</a>
+            </div>
+            {{#if alert}}
+            <div class="alert alert-danger my-3">
+                {{alert}}
+            </div>
+            {{/if}}
+            <div style="text-align: center;">
+                <button class="btn-signin" type="submit">
+                    <p style="margin: 0;">Sign In</p>
+                </button>
+            </div>
+            <div style="text-align: center;">
+                <p>Don't have an account?<a class="ml-1" href="/user/register">Sign up</a></p>
+            </div>
+            <div class="text-center"><a class="btn btn-info" href="/admin/login">Sign In For Admin</a></div>
+        </form>
+    </div>
+</div>
+<script>
+    $('#modalToken').modal('show')
+
+    $('.mic').click(function () {
+        if ($(this).attr('class').includes('far fa-eye mic')) {
+            $(this).attr('class', 'far fa-eye-slash mic')
+            $('#pwd').attr('type', 'text');
+        } else {
+            $(this).attr('class', 'far fa-eye mic')
+            $('#pwd').attr('type', 'password');
+        }
+    })
+</script>

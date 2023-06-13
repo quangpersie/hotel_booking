@@ -1,0 +1,187 @@
+{{> header}}
+<div style="margin-top: 59px;">
+<span hidden id="from_rs">{{flash_from}}</span>
+<span hidden id="to_rs">{{flash_to}}</span>
+<span hidden id="type_room">{{flash_room}}</span>
+<div id="form-search">
+    <div class="search-bar" style="height: fit-content;">
+        <div id="form_book_inputs">
+            <div class="custom_inputs">
+                <span class="text-title">From:</span>
+                <div class="container-inp-cal">
+                    <input class="inp_form_book" type="text" id="date_from">
+                    <div class="custom_ic_calendar">
+                        <i class="fa-regular fa-calendar-days" id="ic_from"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="custom_inputs">
+                <span class="text-title">To:</span>
+                <div class="container-inp-cal">
+                    <input class="inp_form_book" type="text" id="date_to">
+                    <div class="custom_ic_calendar">
+                        <i class="fa-regular fa-calendar-days" id="ic_to"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="custom_inputs select_container">
+                <span class="text-title">Type Room:</span>
+                <select class="inp_form_book inp_options" id="type">
+                    <option value="">--Choose--</option>
+                    <option value="single">Single</option>
+                    <option value="double">Double</option>
+                    <option value="family">Family</option>
+                    <option value="all">All Type</option>
+                </select>
+            </div>
+        </div>
+        <div id="filter_container">
+            <div id="filter_price">
+                <div class="title_filter">Filter by Price:</div>
+                <div id="filter_price_container" >
+                    <input type="radio" name="price-filter" id="100" {{#if (equalNum price 100)}} checked {{/if}}>
+                    <label for="100">100-</label><br>
+                    <input type="radio" name="price-filter" id="200" {{#if (equalNum price 200)}} checked {{/if}}>
+                    <label for="200">200-</label><br>
+                    <input type="radio" name="price-filter" id="300" {{#if (equalNum price 300)}} checked {{/if}}>
+                    <label for="300">300-</label><br>
+                    <input type="radio" name="price-filter" id="400" {{#if (equalNum price 400)}} checked {{/if}}>
+                    <label for="400">400-</label><br>
+                </div>
+            </div>
+            <div style="width: 50%;margin: 12px auto;height: 1px;background-color: #343A40;"></div>
+        </div>
+        <button class="btn-search-result w-75">Search</button>
+
+    </div>
+    <div id="list_result">
+        <h2 class="text-center" style="margin: 8px 0 24px 0;">Search Result</h2>
+        {{#each dataSearch}}
+        <div class="room_result">
+            <img class="room_result_img" src="/img/room/{{image}}" alt="img_room">
+            <div class="room_detail">
+                <h2>Name: {{name}}</h2>
+                <p>{{description}}</p>
+
+                <div class="free_item"> <i class="fa-solid fa-wifi free_ser_ic"></i> Free Wifi</div>
+                <div class="free_item"> <i class="fa-solid fa-square-parking free_ser_ic"></i> Free Parking</div>
+                <div class="price_btn_container">
+                    <div class="price_room" style="font-size: 24px;font-weight: 600;margin: 12px 0;">${{price}}</div>
+                </div>
+                <div class="btn-field">
+                    <button class="btn_book_now btn mr-2 book_now" data-type="{{type}}" data-price="{{price}}" data-id="{{_id}}">Book now</button>
+                    <button class="btn_book_now btn ml-2 btn see_detail" data-id="{{_id}}">See detail</button>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{#unless dataSearch}}
+        <div class="text-center">No result found!</div>
+        {{/unless}}
+    </div>
+</div>
+
+<div class="modal fade" id="modal-invalid-date">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="title-invalid"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="msg-invalid"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal" id="create_folder">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function convertToDate(str) {
+        try {
+            let dateParts = str.split('-');
+            return new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+        } catch(e) {
+            return str
+        }
+    }
+    let from_rs = convertToDate($('#from_rs').text())
+    let to_rs = convertToDate($('#to_rs').text())
+    $('#type').val($('#type_room').text())
+
+    let config_from = {
+        altInput: true,
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        minDate: "today",
+        defaultDate: from_rs
+    }
+
+    let config_to = {
+        altInput: true,
+        enableTime: false,
+        dateFormat: "d-m-Y",
+        minDate: "today",
+        defaultDate: to_rs
+    }
+
+    $('#ic_from').click(function () {
+        let fp = flatpickr("#date_from", config_from);
+        fp.open();
+    });
+
+    $('#ic_to').click(function () {
+        let fp = flatpickr("#date_to", config_to);
+        fp.open();
+    });
+
+    $("#date_from").flatpickr(config_from);
+    $("#date_to").flatpickr(config_to);
+
+    $('.book_now').click(e => {
+        $.ajax({
+            url: `/service/write-price-id?price=${$(e.target).data('price')}&&id=${$(e.target).data('id')}&&type=${$(e.target).data('type')}`
+        })
+        location.href = '/service/confirm-booking'
+    })
+    $('.see_detail').click(e => {
+        location.href = `/service/room-detail/${$(e.target).attr("data-id")}`
+    })
+
+    $('.btn-search-result').click(e => {
+        let price = -1
+        if($('#100').prop('checked')) {
+            price = 100
+        } else if($('#200').prop('checked')) {
+            price = 200
+        } else if($('#300').prop('checked')) {
+            price = 300
+        } else if($('#400').prop('checked')) {
+            price = 400
+        }
+
+        let fromDate = $('#date_from').val()
+        let toDate = $('#date_to').val()
+        let type = $('#type').val()
+        let from = convertToDate(fromDate)
+        let to = convertToDate(toDate)
+        if (from >= to) {
+            $('#title-invalid').text('Date invalid')
+            $('#msg-invalid').text('Invalid date! Check-in date will be sooner than check-out date')
+            $('#modal-invalid-date').modal('show');
+        } else if (type === '') {
+            $('#title-invalid').text('Type room invalid')
+            $('#msg-invalid').text('Invalid room type! You must have to choose one type of room')
+            $('#modal-invalid-date').modal('show');
+        } else if(price > 0) {
+            location.href = `/service/search-result?fromDate=${fromDate}&&toDate=${toDate}&&type=${type}&&price=${price}`
+        } else {
+            location.href = `/service/search-result?fromDate=${fromDate}&&toDate=${toDate}&&type=${type}`
+        }
+    })
+</script>
+
+{{> footer}}
+</div>

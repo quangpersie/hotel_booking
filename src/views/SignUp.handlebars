@@ -1,0 +1,114 @@
+{{> header}}
+<style>
+  #pwd1,
+  #pwd2 {
+    padding-right: 32px;
+  }
+
+  .bg_icon {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    z-index: 100;
+  }
+
+  .mic {
+    font-size: 18px;
+  }
+</style>
+<div class="content-signup" style="margin-top: 30px;">
+  <div class="container-signup">
+    <p id="title-signup">SIGN UP</p>
+    <form class="fill-place-signup" method="post" action="/user/register">
+      <div class="d-flex" style="justify-content: space-between;">
+        <div class="fill-left" style="flex: 1;">
+          <div>
+            <label class="text-title-form" for="firstName">Full name</label><br>
+            <input class="site-ui-input" type="text" placeholder="Full name" name="name" value="{{dataOld.name}}">
+          </div>
+          <div>
+            <label class="text-title-form" for="password">Phone number</label><br>
+            <input class="site-ui-input" type="text" placeholder="Phone number" name="phone" value="{{dataOld.phone}}">
+          </div>
+          <div>
+            <label class="text-title-form" for="firstName">Id card number</label><br>
+            <input class="site-ui-input" type="text" placeholder="Id card number" name="idCard"
+              value="{{dataOld.idCard}}">
+          </div>
+        </div>
+        <div class="fill-right" style="flex: 1;">
+          <div>
+            <label class="text-title-form" for="phonenumber">Email</label><br>
+            <input class="site-ui-input" type="text" placeholder="Email" name="email" value="{{dataOld.email}}">
+          </div>
+          <div>
+            <label class="text-title-form" for="address">Address</label><br>
+            <input class="site-ui-input" type="text" placeholder="Address" name="address" value="{{dataOld.address}}">
+          </div>
+          <div>
+            <label class="text-title-form" for="firstName">Password</label><br>
+            <div style="position: relative;padding-top: 0;">
+              <input id="pwd1" class="site-ui-input" type="password" placeholder="Password" name="password"
+                value="{{dataOld.password}}">
+              <div class="bg_icon" style="padding-top: 0;"><i class="far fa-eye mic" id="p1"></i></i></div>
+            </div>
+          </div>
+          <div>
+            <label class="text-title-form" for="address">Confirm password</label><br>
+            <div style="position: relative;padding-top: 0;">
+              <input id="pwd2" class="site-ui-input" type="password" placeholder="Confirm password"
+                name="confirm_password" value="{{dataOld.confirm_password}}">
+              <div class="bg_icon" style="padding-top: 0;"><i class="far fa-eye mic" id="p2"></i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="pwd-kok" class="text-danger font-weight-bolder" hidden>Mật khẩu xác nhận không trùng khớp!</div>
+      <div id="pwd-ok" class="text-success font-weight-bolder" hidden>Mật khẩu xác nhận đã trùng khớp</div>
+      {{#if alert}}
+      <div class="alert alert-danger my-3">
+        {{alert}}
+      </div>
+      {{/if}}
+      <div class="cover-btn">
+        <button class="btn-signup btn btn-primary mx-2">Sign up</button>
+        <a class="btn-signup btn btn-primary mx-2" href="/user/login">Back to Sign in</a>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  $('.mic').click(function () {
+    if ($(this).attr('class').includes('far fa-eye mic')) {
+      $(this).attr('class', 'far fa-eye-slash mic')
+      if ($(this).attr('id') === 'p1') {
+        $('#pwd1').attr('type', 'text');
+      } else {
+        $('#pwd2').attr('type', 'text');
+      }
+    } else {
+      $(this).attr('class', 'far fa-eye mic')
+      if ($(this).attr('id') === 'p1') {
+        $('#pwd1').attr('type', 'password');
+      } else {
+        $('#pwd2').attr('type', 'password');
+      }
+    }
+  })
+
+  $('#pwd1, #pwd2').on('input', (e) => {
+    if ($('#pwd2').val() === '' || $('#pwd1').val() === '') {
+      $('#pwd-ok').prop('hidden', true)
+      $('#pwd-kok').prop('hidden', true)
+    }
+    else if ($('#pwd2').val() === $('#pwd1').val()) {
+      $('#pwd-ok').prop('hidden', false)
+      $('#pwd-kok').prop('hidden', true)
+    } else {
+      $('#pwd-ok').prop('hidden', true)
+      $('#pwd-kok').prop('hidden', false)
+    }
+  })
+</script>

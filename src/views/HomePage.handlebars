@@ -1,0 +1,224 @@
+<!-- homepage -->
+{{> header}}
+<div class="homepage">
+    <div id="text_above_banner"></div>
+    <div id="banner">
+        <div class="text-on-banner">
+            <h2 style="color: black;">Booking with Us</h2>
+            <h2 style="color: black;">Enjoy your Journey</h2>
+        </div>
+        <div id="form_book">
+            <div id="form_book_inputs">
+                <div class="custom_inputs">
+                    <span class="text-title">From:</span>
+                    <div class="container-inp-cal">
+                        <input class="inp_form_book" type="text" id="date_from">
+                        <div class="custom_ic_calendar">
+                            <i class="fa-regular fa-calendar-days" id="ic_from"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom_inputs">
+                    <span class="text-title">To:</span>
+                    <div class="container-inp-cal">
+                        <input class="inp_form_book" type="text" id="date_to">
+                        <div class="custom_ic_calendar">
+                            <i class="fa-regular fa-calendar-days" id="ic_to"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom_inputs">
+                    <span class="text-title">Type Room:</span>
+                    <select class="inp_form_book inp_options" id="type">
+                        <option value="">--Choose--</option>
+                        <option value="single">Single</option>
+                        <option value="double">Double</option>
+                        <option value="family">Family</option>
+                        <option value="all">All Type</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="btn_search_container">
+                <button class="btn" id="btn_search">Search rooms</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-invalid-date">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="title-invalid"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="msg-invalid"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal" id="create_folder">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="some-images" style="height: 60px;"></div>
+    <div class="content">
+        <div class="text_before_img">Popular <span class="text_before_img_color">Room</span></div>
+        <div class="image-content">
+            <div class="image-column">
+                <img src="/img/imagefirst.jpg" width="100%" height="100%" class="img" />
+                <div class="title-image">
+                    <span class="text-image">Single Room</span>
+                </div>
+            </div>
+
+            <div class="image-column-parent">
+                <div class="image-content-child">
+                    <img src="/img/viewsea.jpeg" width="100%" height="100%" class="img" />
+                    <div class="title-image">
+                        <span class="text-image">Room Near Sea</span>
+                    </div>
+                </div>
+
+                <div style="height: 40%;" class="image-content-child">
+                    <img src="/img/viewcity.jpg" width="100%" height="100%" class="img" />
+                    <div class="title-image">
+                        <span class="text-image">Room Near City</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="image-column">
+                <img src="/img/double.jpg" width="100%" height="100%" class="img" />
+                <div class="title-image">
+                    <span class="text-image">Double Room</span>
+                </div>
+            </div>
+
+            <div class="image-column-parent">
+                <div style="height: 40%;" class="image-content-child">
+                    <img src="/img/family.jpg" width="100%" height="100%" class="img" />
+                    <div class="title-image">
+                        <span class="text-image">Family Room</span>
+                    </div>
+                </div>
+
+                <div class="image-content-child">
+                    <img src="/img/vip.jpg" width="100%" height="100%" class="img" />
+                    <div class="title-image">
+                        <span class="text-image">Vip Room</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="about-us" style="height: 60px;"></div>
+    <div class="text_before_img" style="margin-top: 32px;">About <span class="text_before_img_color">Us</span>:</div>
+    <div class="div_parent_img">
+        <div class="img_container">
+            <div class="container-img-text">
+                <img src="/img/logo.png" alt="ia" class="img_about_us">
+                <div class="text-under-img">
+                    Our hotel was established in 2021, has been operating for 2 years now. We are still on the way to
+                    improve brand value to always be a reliable choice of customers.
+                </div>
+            </div>
+            <div class="container-img-text reverse">
+                <img src="/img/car-service.png" alt="ia" class="img_about_us"
+                    style="background-color: orange;opacity: 0.7;border-radius: 32px;padding: 12px;">
+                <div class="text-under-img">
+                    Our hotel's 4-seater coach car rental or shuttle service will always make your journey more
+                    convenient
+                    with a team of skilled drivers, interior space of modern vehicles.
+                    Especially we say no to late appointments. Our hotel will always support you at the best level.
+                </div>
+            </div>
+            <div class="container-img-text">
+                <img src="/img/mail-phone.png" alt="ia" class="img_about_us"
+                    style="background-color: orange;opacity: 0.7;border-radius: 50%;padding: 16px;">
+                <div class="text-under-img">
+                    In the process of using the service, if you have any questions or complaints about anything, please
+                    contact us by email, or call the hotel directly to solve all your requests.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let path = location.href
+        let anchor = path.substring(path.lastIndexOf(":") + 1)
+        anchor = anchor.substring(anchor.indexOf('/'))
+
+        setTimeout(() => {
+            if (anchor === '/?about=true') {
+                document.getElementById('about-us').scrollIntoView();
+            } else if (anchor === '/?simg=true') {
+                document.getElementById('some-images').scrollIntoView();
+            }
+        }, 100)
+
+        function convertToDate(str) {
+            try {
+                let dateParts = str.split('-');
+                return new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+            } catch (e) {
+                return str
+            }
+        }
+
+        $('#btn_search').click(e => {
+            let fromDate = $('#date_from').val()
+            let toDate = $('#date_to').val()
+            let type = $('#type').val()
+            let from = convertToDate(fromDate)
+            let to = convertToDate(toDate)
+            if (from >= to) {
+                $('#title-invalid').text('Date invalid')
+                $('#msg-invalid').text('Invalid date! Check-in date will be sooner than check-out date')
+                $('#modal-invalid-date').modal('show');
+            } else if (type === '') {
+                $('#title-invalid').text('Type room invalid')
+                $('#msg-invalid').text('Invalid room type! You must have to choose one type of room')
+                $('#modal-invalid-date').modal('show');
+            } else {
+                location.href = `/service/search-result?fromDate=${fromDate}&&toDate=${toDate}&&type=${type}`
+            }
+        })
+
+        let today = new Date()
+        let tomorrow = new Date().setDate(today.getDate() + 1)
+
+        let config_from = {
+            altInput: true,
+            enableTime: false,
+            dateFormat: "d-m-Y",
+            minDate: "today",
+            defaultDate: today
+        }
+
+        let config_to = {
+            altInput: true,
+            enableTime: false,
+            dateFormat: "d-m-Y",
+            minDate: "today",
+            defaultDate: tomorrow
+        }
+
+        $('#ic_from').click(function () {
+            let fp = flatpickr("#date_from", config_from);
+            fp.open();
+        });
+
+        $('#ic_to').click(function () {
+            let fp = flatpickr("#date_to", config_to);
+            fp.open();
+        });
+
+        $("#date_from").flatpickr(config_from);
+        $("#date_to").flatpickr(config_to);
+    </script>
+    <!-- end homepage -->
+    {{> footer}}
+</div>

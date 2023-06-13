@@ -1,0 +1,70 @@
+{{> header}}
+<div style="min-height: 100vh;margin-top: 59px;">
+    <h3 class="mt-5 mt-3 text-center">History Booking</h3>
+    <div class="row history-booking d-flex justify-content-flex-start mx-md-5 mx-3">
+        {{#each hitories}}
+        <div class="jumbotron item-history col-lg-4 mx-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <strong class="mr-2">Room name:</strong>
+                        <span>{{getRoomName roomId}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <strong class="mr-2">Type Room:</strong>
+                        <span>{{getRoomType roomId}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 d-flex">
+                        <strong class="mr-2">From:</strong>
+                        <span>{{formatDate checkInDate}}</span>
+                    </div>
+                    <div class="col-6 d-flex mr-lg-2">
+                        <strong class="mr-2">To:</strong>
+                        <span>{{formatDate checkOutDate}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex mr-lg-2">
+                        <strong class="mr-2">Room Price:</strong>
+                        <span>$ {{getRoomPrice roomId}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <strong>Services:</strong>
+                        {{#each services}}
+                        <br><span>{{getInfoService this}}</span>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <strong class="mr-2">Total:</strong>
+                        <span>$ {{price}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{#unless hitories}}
+        <div class="text-center col-12">No data history</div>
+        {{/unless}}
+    </div>
+    <script>
+        function showHidePseudo() {
+            let els = $('.dropdown-menu.show')
+            if (els.length > 0) {
+                console.log("ok")
+                $('.dropdown-menu').removeClass('show')
+            } else {
+                console.log("kok")
+                $('.dropdown-menu').addClass('show')
+            }
+        }
+    </script>
+</div>
+{{> footer}}

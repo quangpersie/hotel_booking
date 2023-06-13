@@ -1,0 +1,240 @@
+{{> header}}
+<div class="modal" id="modalAlert">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Booking Notification</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="errName" class="mt-2 text-center"></p>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 59px; padding: 32px">
+    <div hidden>
+        <span id="cusId">{{cusId}}</span>
+        <span id="roomId">{{roomId}}</span>
+    </div>
+    <div class="container-confirm-booking">
+        <div class="detail-booking">
+            <div class="form-infomation">
+                <div class="header-form-infomation">
+                    <i class="fa-regular fa-circle-check icon-header"></i>
+                    <h2 style="color: #2D9332;">Confirm booking !</h2>
+                </div>
+                <div class="form-user-infomation">
+                    <div class="text-container-have-icon">
+                        <span class="text-header">Your infomation</span>
+                        <i class="fa-solid fa-user-pen icon"></i>
+                    </div>
+                    {{#if curCus}}
+                    <div class="row">
+                        <div class="col-12 mt-3 col-md-6">
+                            <label for="card_number">Name:</label>
+                            <input id="name" readonly class="w-100" type="text" value="{{curCus.name}}">
+                            <span class="bottom" />
+                            <span class="right" />
+                            <span class="top" />
+                            <span class="left" />
+                        </div>
+                        <div class="col-12 mt-3 col-md-6">
+                            <label for="card_number">Phone:</label>
+                            <input id="phone" readonly class="w-100" type="text" value="{{curCus.phone}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <label for="card_number">ID Card Number:</label>
+                            <input id="idCard" readonly class="w-100" type="text" value="{{curCus.idCard}}">
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label for="card_number">Address:</label>
+                            <input id="address" readonly class="w-100" type="text" value="{{curCus.address}}">
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="row" style="margin: 0 30px;">
+                        <div class="col-12 mt-3 col-md-6">
+                            <label for="card_number">Name:</label>
+                            <input id="name" class="w-100" type="text">
+                        </div>
+                        <div class="col-12 mt-3 col-md-6">
+                            <label for="card_number">Phone:</label>
+                            <input id="phone" class="w-100" type="text">
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0 30px;">
+                        <div class="col-12 mt-3">
+                            <label for="card_number">ID Card Number:</label>
+                            <input id="idCard" class="w-100" type="text">
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label for="card_number">Address:</label>
+                            <input id="address" class="w-100" type="text">
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+
+            <div class="room-info">
+                <div class="text-container-have-icon">
+                    <span class="text-header">Room information</span>
+                    <i class="fa-sharp fa-solid fa-hotel icon"></i>
+                </div>
+                <span>You will be arrived between <b id="checkIn">{{flash_from}}</b> and <b id="checkOut">{{flash_to}}</b>.</span><br>
+                <span>Your type room is <b>{{roomType}}</b>.</span>
+            </div>
+        </div>
+
+        <div class="price-booking">
+            <div class="service-info">
+                <div class="text-container-have-icon">
+                    <span class="text-header">Services information</span>
+                    <i class="fa-solid fa-bell-concierge icon"></i>
+                </div>
+                {{#each serviceData}}
+                <div>
+                    <label class="sub_service" style="font-weight: 500;" for="meal">{{name}} (${{price}})</label>
+                    <input type="checkbox" data-price="{{price}}" data-id="{{_id}}" data-service="{{stringify this}}"
+                        class="check-service">
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="payment">
+                <div class="text-container-have-icon">
+                    <span class="text-header">Payment summary</span>
+                    <i class="fa-solid fa-money-bill icon"></i>
+                </div>
+                <div id="price-field">
+                    <div>
+                        <label for="room_price_" id="num_date"></label>
+                        <span id="room_price_">$ {{room_price}}</span>
+                    </div>
+                </div>
+                <div id="total_price">
+                    <label for="">Total:</label>
+                    <span style="font-weight: bold;float: right;" id="price_total"></span>
+                </div>
+                <div id="btn_confirm_booking" class="btn-booking">
+                    <a style="color: white;">Confirm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // some functions
+        function callModal(msg) {
+            $('#errName').text(msg)
+            $('#modalAlert').modal('show')
+        }
+
+        function updateTotal() {
+            let arr = $('.price_display')
+            let sum = 0
+            for (let i = 0; i < arr.length; i++) {
+                sum += parseInt($(arr[i]).text().replace('$ ', ''))
+            }
+
+            $('#price_total').text('$ ' + sum)
+        }
+
+        function convertToDate(str) {
+            try {
+                let dateParts = str.split('-');
+                return new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`);
+            } catch (e) {
+                return str
+            }
+        }
+
+        // load total price
+        let a = convertToDate($('#checkIn').text())
+        let b = convertToDate($('#checkOut').text())
+        let num = (b.getDate() - a.getDate())
+        let price = parseInt($('#room_price_').text().replace('$ ', ''))
+        $('#room_price_').html(`$ <b class="price_display">${price * num}</b>`)
+        $('#num_date').html(`Your Room: <br> [${num} day(s) - $${price}/day]`)
+
+        updateTotal()
+
+        $('.check-service').change(e => {
+            let obj = $(e.target).data('service')
+            let id = obj._id
+            let check = $(e.target).prop('checked')
+            if (check) {
+                let element = `
+                    <div id='${id}'>
+                        <label for="">${obj.name}: </label>
+                        <span class="price_display">$ <b>${obj.price}</b></span>
+                    </div>
+                `
+                $('#price-field').append(element)
+            } else {
+                $(`#${id}`).remove()
+            }
+
+            updateTotal()
+        })
+
+        // call ajax to create booking
+        $('#btn_confirm_booking').click(e => {
+            let sers = $('.check-service')
+            let arrSers = []
+            for (let i = 0; i < sers.length; i++) {
+                if ($(sers[i]).prop('checked')) {
+                    arrSers.push($(sers[i]).data('id'))
+                }
+            }
+            console.log(arrSers)
+
+            let dataBook = {
+                customerId: $('#cusId').text(),
+                roomId: $('#roomId').text(),
+                checkInDate: $('#checkIn').text(),
+                checkOutDate: $('#checkOut').text(),
+                price: parseInt($('#price_total').text().replace('$ ', '')),
+                services: JSON.stringify(arrSers),
+                name: $('#name').val(),
+                phone: $('#phone').val(),
+                idCard: $('#idCard').val(),
+                address: $('#address').val()
+            }
+
+            if(!dataBook.roomId || !dataBook.checkInDate || !dataBook.checkOutDate || !dataBook.price || !dataBook.services || !dataBook.name || !dataBook.phone || !dataBook.idCard || !dataBook.address) {
+                callModal('You have to fill in all fields !')
+            } else if(isNaN(dataBook.price)) {
+                callModal('Price must be a number !')
+            } else if(isNaN(dataBook.idCard)) {
+                callModal('Id Card must be a number !')
+            } else if(isNaN(dataBook.phone)) {
+                callModal('Phone must be a number !')
+            } else {
+                $.ajax({
+                    url: '/service/confirm-booking',
+                    type: 'POST',
+                    data: dataBook,
+                    success: d => {
+                        console.log(d)
+                        if (d.code === 0) {
+                            location.href = '/service/booking-success'
+                        } else {
+                            callModal(d.message)
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+</div>
+{{> footer}}

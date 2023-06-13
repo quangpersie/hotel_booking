@@ -1,0 +1,65 @@
+{{> header}}
+<style>
+    #pwd {
+      padding-right: 32px;
+    }
+
+    .bg_icon {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      right: 10px;
+      top: 12px;
+      z-index: 100;
+    }
+
+    .mic {
+        font-size: 18px;
+    }
+</style>
+<div class="content-signin">
+    <div class="container-signin">
+        <p id="title-signin">SIGN IN FOR ADMIN</p>
+        <form novalidate class="fill-place-signin" method="post" action="/admin/login">
+            <div>
+                <label class="text-title-form" for="email">Admin name</label>
+                <input id="email" class="site-ui-input" type="text" placeholder="Your admin name" name="email" value="{{email}}">
+            </div>
+            <div>
+                <label class="text-title-form" for="pwd">Password</label><br>
+                <div style="position: relative;padding-top: 0;">
+                    <input id="pwd" class="site-ui-input" type="password" placeholder="Your password" name="password" value="{{password}}">
+                    <div class="bg_icon" style="padding-top: 0;"><i class="far fa-eye mic"></i></div>
+                </div>
+            </div>
+            <div id="forgotpwd">
+                <a style="color: black;" href="/user/forgot-password">Forgot password ?</a>
+            </div>
+            {{#if alert}}
+                <div class="alert alert-danger my-3">
+                    {{alert}}
+                </div>
+            {{/if}}
+            <div style="text-align: center;">
+                <button class="btn-signin" type="submit">
+                    <p style="margin: 0;">Sign In</p>
+                </button>
+            </div>
+            <div style="text-align: center;">
+                <p>Don't have an account?<a class="ml-1" href="/user/register">Sign up</a></p>
+            </div>
+            <div class="text-center"><a class="btn btn-info" href="/user/login">Sign In For User</a></div>
+        </form>
+    </div>
+</div>
+<script>
+    $('.mic').click(function () {
+      if($(this).attr('class').includes('far fa-eye mic')) {
+        $(this).attr('class', 'far fa-eye-slash mic')
+        $('#pwd').attr('type', 'text');
+      } else {
+        $(this).attr('class', 'far fa-eye mic')
+        $('#pwd').attr('type', 'password');
+      }
+    })
+</script>

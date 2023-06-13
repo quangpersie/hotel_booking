@@ -1,0 +1,62 @@
+{{> header}}
+{{#if alert}}
+<div class="modal" id="modalAlert">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Profile Notification</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="errName" class="mt-2 text-center">{{alert}}</p>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
+<div class="container edit-profile" style="margin-top: 59px;">
+    <div class="container p-5 my-3 profile-field">
+        <form method="post" action="" class="p-5 rounded">
+        <img src="/img/IconUSER.png" alt=""/>
+        <div class="form-row">
+            <div class="col-md-6 form-group">
+                <label for="name" class="title-info">Full name:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your fullname" value="{{curCus.name}}"/>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="idCard" class="title-info">ID card:</label>
+                <input type="text" class="form-control" id="idCard" name="idCard" placeholder="Your ID card number" value="{{curCus.idCard}}"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 form-group">
+                <label for="email" class="title-info">Email:</label>
+                <input readonly type="text" class="form-control" name="email" id="email" placeholder="Your address" value="{{curCus.email}}"/>
+            </div>
+            <div class="col-md-6 form-group">
+                <label for="phone" class="title-info">Phone Number:</label>
+                <input class="form-control" type="tel" name="phone" id="phone" placeholder="Your phone number" value="{{curCus.phone}}"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 form-group">
+                <label for="address" class="title-info">Address:</label>
+                <input type="text" class="form-control" name="address" id="address" placeholder="Your address" value="{{curCus.address}}"/>
+            </div>
+        </div>
+        <div class="text-center">
+            <input class="btn px-5 py-2 mx-auto rounded-pill" style="background-color: #0c0a01; color:white" type="submit" value="Save Profile" />
+        </div>
+    </form>
+    </div>
+</div>
+<script>
+    $('#modalAlert').modal('show')
+</script>
+{{> footer}}
